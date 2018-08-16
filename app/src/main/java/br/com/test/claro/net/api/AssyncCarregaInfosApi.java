@@ -12,7 +12,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import br.com.test.claro.net.BuildConfig;
 import br.com.test.claro.net.model.CustonShot;
+import br.com.test.claro.net.repository.CustonShotRepository;
 import br.com.test.claro.net.sqlite.ShotDao;
 import br.com.test.claro.net.utils.Constants;
 
@@ -22,7 +24,6 @@ public class AssyncCarregaInfosApi extends AsyncTask<String, Void, List<CustonSh
     private String TOKEN = Constants.Dribbble.Token;
     private int PAGE;
     private Context context;
-    private static ProgressDialog progresslogin;
     private OnListenerStatusCallApi onListenerStatusCallApi;
     private boolean isFirst = false;
 
@@ -40,22 +41,10 @@ public class AssyncCarregaInfosApi extends AsyncTask<String, Void, List<CustonSh
     }
 
     @Override
-    protected void onPreExecute() {
-        progresslogin = new ProgressDialog(context);
-        progresslogin.setTitle("Aguarde...");
-        progresslogin.setIndeterminate(true);
-        progresslogin.setCancelable(false);
-        progresslogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progresslogin.show();
-    }
+    protected void onPreExecute() {}
 
     @Override
     protected List<CustonShot> doInBackground(String... strings) {
-
-//        String COMPLETED_URL = URLEncoder.encode(SERVER
-//                + "&access_token=" + TOKEN
-//                + "&page=" + PAGE
-//                + "&per_page=" + PER_PAGE);
 
         String COMPLETED_URL = SERVER;
 
@@ -64,7 +53,13 @@ public class AssyncCarregaInfosApi extends AsyncTask<String, Void, List<CustonSh
         try {
 
             ConversorJsonParaObjeto conversorJsonParaObjeto = new ConversorJsonParaObjeto();
-            List<CustonShot> custonShotArrayList = conversorJsonParaObjeto.conversorJsonStringParaObjeto(getJSONObjectFromURL(COMPLETED_URL));
+            List<CustonShot> custonShotArrayList = null;
+
+            if( BuildConfig.FLAVOR.equals("repo") ){
+                custonShotArrayList = CustonShotRepository.getListCustonShot();
+            }else{
+                custonShotArrayList = conversorJsonParaObjeto.conversorJsonStringParaObjeto(getJSONObjectFromURL(COMPLETED_URL));
+            }
 
             ShotDao shotDao = new ShotDao(context);
             shotDao.insertListCustonShot(custonShotArrayList);
@@ -94,7 +89,6 @@ public class AssyncCarregaInfosApi extends AsyncTask<String, Void, List<CustonSh
         if(onListenerStatusCallApi != null){
             onListenerStatusCallApi.sucess(custonShotList, PAGE++);
         }
-        progresslogin.dismiss();
     }
 
     public void cancelListener(){
@@ -103,7 +97,6 @@ public class AssyncCarregaInfosApi extends AsyncTask<String, Void, List<CustonSh
 
     @Override
     protected void onCancelled() {
-        progresslogin.dismiss();
         if(onListenerStatusCallApi != null){
             onListenerStatusCallApi.canceled();
         }

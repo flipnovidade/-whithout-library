@@ -1,5 +1,6 @@
 package br.com.test.claro.net.views;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements AssyncCarregaInfo
     private PreferencesApp preferencesApp;
     private ListView listView;
     private AdapterShot adapterShot;
+    private static ProgressDialog progresslogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements AssyncCarregaInfo
             }
         });
 
+        setupProgress();
         setPreferenceApp();
         callApi(true);
     }
@@ -67,22 +70,31 @@ public class MainActivity extends AppCompatActivity implements AssyncCarregaInfo
         }else{
             adapterShot.addItemList(custonShotList);
         }
-
+        progresslogin.dismiss();
     }
 
     @Override
     public void fail() {
-
+        progresslogin.dismiss();
     }
 
     @Override
     public void canceled() {
-
+        progresslogin.dismiss();
     }
 
     @Override
     protected void onDestroy() {
         assyncCarregaInfosApi.cancelListener();
         super.onDestroy();
+    }
+
+    protected void setupProgress() {
+        progresslogin = new ProgressDialog(this);
+        progresslogin.setTitle("Aguarde...");
+        progresslogin.setIndeterminate(true);
+        progresslogin.setCancelable(false);
+        progresslogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progresslogin.show();
     }
 }
