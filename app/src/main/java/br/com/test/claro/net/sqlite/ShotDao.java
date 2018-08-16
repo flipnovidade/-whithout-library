@@ -48,11 +48,11 @@ public class ShotDao {
         dbHelper = new MySQLiteHelper(context);
     }
 
-    private void open() throws SQLException {
+    public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
 
-    private void close() {
+    public void close() {
         dbHelper.close();
     }
 
