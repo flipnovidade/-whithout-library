@@ -16,7 +16,7 @@ public class ConversorJsonParaObjeto {
         List<CustonShot> custonShotList = new ArrayList<>();
 
         try {
-//            JSONObject jsonobject = new JSONObject(jsonString);
+
             JSONArray array = new JSONArray(jsonString);
             int max = array.length();
 

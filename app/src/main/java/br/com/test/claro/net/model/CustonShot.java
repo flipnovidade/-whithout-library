@@ -10,7 +10,6 @@ public class CustonShot implements Serializable{
     private String description;
     private String publishedAt;
     private String updatedAt;
-    private String urlAvatar;
     private String urlImage;
     private String linkPage;
 
@@ -36,14 +35,6 @@ public class CustonShot implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getUrlAvatar() {
-        return urlAvatar;
-    }
-
-    public void setUrlAvatar(String url_avatar) {
-        this.urlAvatar = url_avatar;
     }
 
     public String getUrlImage() {

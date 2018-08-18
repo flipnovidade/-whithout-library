@@ -20,10 +20,10 @@ public class ShotDao {
     public static final String COLUNA_ID = "_id";
     public static final String COLUNA_TITLE = "title";
     public static final String COLUNA_DESCRIPTION = "description";
-    public static final String COLUNA_PUBLISHAT = "coluna_publishat";
-    public static final String COLUNA_UPDATEAT = "coluna_updateat";
-    public static final String COLUNA_LINK_PAGE = "url_avatar";
+    public static final String COLUNA_PUBLISHAT = "published_at";
+    public static final String COLUNA_UPDATEAT = "updated_at";
     public static final String COLUNA_URL_IMAGE = "url_image";
+    public static final String COLUNA_LINK_PAGE = "url_link_page";
 
     public static String[] allColumns = {
             COLUNA_ID,
@@ -31,8 +31,8 @@ public class ShotDao {
             COLUNA_DESCRIPTION,
             COLUNA_PUBLISHAT,
             COLUNA_UPDATEAT,
-            COLUNA_LINK_PAGE,
-            COLUNA_URL_IMAGE
+            COLUNA_URL_IMAGE,
+            COLUNA_LINK_PAGE
     };
 
     public static final String CREATE_TABLE_ITEM_MEDIA = "CREATE TABLE IF NOT EXISTS " + TABLE_ITEM_MEDIA + " ("
@@ -174,8 +174,8 @@ public class ShotDao {
         itemMediaApp.setDescription(cursor.getString(2));
         itemMediaApp.setPublishedAt(cursor.getString(3));
         itemMediaApp.setUpdatedAt(cursor.getString(4));
-        itemMediaApp.setUrlAvatar(cursor.getString(5));
-        itemMediaApp.setUrlImage(cursor.getString(6));
+        itemMediaApp.setUrlImage(cursor.getString(5));
+        itemMediaApp.setLinkPage(cursor.getString(6));
 
         return itemMediaApp;
     }
@@ -187,8 +187,8 @@ public class ShotDao {
         values.put(allColumns[2], itemMediaApp.getDescription());
         values.put(allColumns[3], itemMediaApp.getPublishedAt());
         values.put(allColumns[4], itemMediaApp.getUpdatedAt());
-        values.put(allColumns[5], itemMediaApp.getUrlAvatar());
-        values.put(allColumns[6], itemMediaApp.getUrlImage());
+        values.put(allColumns[5], itemMediaApp.getUrlImage());
+        values.put(allColumns[6], itemMediaApp.getLinkPage());
 
         return values;
     }

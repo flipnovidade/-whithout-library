@@ -72,7 +72,7 @@ public class AdapterShot extends BaseAdapter {
         txvLinhaUmDireita.setText(Html.fromHtml("<b>Updated: </b>" + custonShot.getUpdatedAt()));
         txvLinhaUmDireita.setVisibility(View.INVISIBLE);
 
-        if(custonShot.getUrlAvatar() != null){
+        if(custonShot.getUrlImage() != null){
             txvLinhaUmDireita.setVisibility(View.VISIBLE);
         }
 
